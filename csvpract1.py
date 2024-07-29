@@ -36,3 +36,46 @@ class EmployeeManagementSystem:
         employees = self.read_all_employees()
         for emp in employees:
             print(emp)
+    def generate_report(self):
+        employees = self.read_all_employees()
+        department_counts = {}
+        for emp in employees:
+            department = emp[2]  # Assuming department is the third column
+            if department in department_counts:
+                department_counts[department] += 1
+            else:
+                department_counts[department] = 1
+        print("Department-wise Employee Report:")
+        for department, count in department_counts.items():
+            print(f"{department}: {count} employees")
+            
+    def main():
+        filename = 'employees.csv'
+        system = EmployeeManagementSystem(filename)
+        while True:
+        print("\nEmployee Management System")
+        print("1. Add Employee")
+        print("2. Update Employee")
+        print("3. Display All Employees")
+        print("4. Generate Report")
+        print("5. Exit")
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '1':
+            employee_data = input("Enter employee details (ID, Name, Department, Position, Salary): ").split(',')
+            system.add_employee(employee_data)
+        elif choice == '2':
+            employee_id = input("Enter employee ID to update: ")
+            updated_data = input("Enter updated details (ID, Name, Department, Position, Salary): ").split(',')
+            system.update_employee(employee_id, updated_data)
+        elif choice == '3':
+            system.display_employees()
+        elif choice == '4':
+            system.generate_report()
+        elif choice == '5':
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
